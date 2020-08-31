@@ -1,18 +1,22 @@
 package com.example.controller;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.Product;
@@ -93,4 +97,23 @@ public class ProductController {
         return map;
     }
 
+    /**
+     * Performs partial update on a given product.
+     * 
+     * @param id
+     * @param map
+     */
+    @PatchMapping("/{id}")
+    public @ResponseBody void saveManager(@PathVariable("id") Long id, @RequestBody Map<Object, Object> fields) {
+
+        Product product = this.productService.getProduct(id);
+
+        fields.forEach((k, v) -> {
+            Field field = ReflectionUtils.findField(Product.class, (String) k);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, product, v);
+        });
+
+        this.productService.updateProduct(product);
+    }
 }
