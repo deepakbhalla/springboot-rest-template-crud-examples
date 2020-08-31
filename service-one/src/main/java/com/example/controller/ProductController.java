@@ -25,18 +25,37 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    /**
+     * Get all the available products.
+     * 
+     * @return
+     */
     @GetMapping
     public List<Product> getProducts() {
 
         return this.productService.getProducts();
     }
 
+    /**
+     * Get a specific product requested by client.
+     * 
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") Long id) {
 
         return this.productService.getProduct(id);
     }
 
+    /**
+     * Create a new product.
+     * 
+     * @param id
+     * @param name
+     * @param price
+     * @return
+     */
     @PostMapping
     public Map<String, String> createProduct(@RequestParam(value = "id") Long id,
             @RequestParam(value = "name") String name, @RequestParam(value = "price") Integer price) {
@@ -47,6 +66,12 @@ public class ProductController {
         return map;
     }
 
+    /**
+     * Delete a product details of which client sends as JSON in request body.
+     * 
+     * @param product
+     * @return
+     */
     @PutMapping
     public Product updateProduct(@RequestBody Product product) {
 
