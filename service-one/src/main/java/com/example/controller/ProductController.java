@@ -5,9 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.model.CustomError;
 import com.example.model.Product;
 import com.example.service.ProductService;
 
@@ -28,6 +35,13 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleError(HttpServletRequest req, Exception ex) {
+
+        CustomError error = new CustomError(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<Object>(error, new HttpHeaders(), error.getStatus());
+    }
 
     /**
      * Get all the available products.
