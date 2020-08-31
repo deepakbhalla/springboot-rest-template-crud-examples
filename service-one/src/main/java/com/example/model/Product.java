@@ -6,6 +6,10 @@ public class Product {
     private String productName;
     private Integer productPrice;
 
+    public Product() {
+        super();
+    }
+
     public Product(Long productID, String productName, Integer productPrice) {
         super();
         this.productID = productID;

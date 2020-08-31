@@ -28,13 +28,30 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProduct(Long id) {
         Iterator<Product> iterator = products.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             Product product = iterator.next();
-            if(product.getProductID().equals(id)) {
+            if (product.getProductID().equals(id)) {
                 return product;
             }
         }
         return null;
+    }
+
+    @Override
+    public void createProduct(Long productID, String productName, Integer price) {
+        Product product = new Product(productID, productName, price);
+        this.products.add(product);
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        getProduct(product.getProductID()).setProductName(product.getProductName());
+        getProduct(product.getProductID()).setProductPrice(product.getProductPrice());
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        this.products.remove(getProduct(id));
     }
 
 }
