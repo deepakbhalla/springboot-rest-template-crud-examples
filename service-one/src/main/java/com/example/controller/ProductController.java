@@ -67,7 +67,7 @@ public class ProductController {
     }
 
     /**
-     * Delete a product details of which client sends as JSON in request body.
+     * Update a product details of which client sends as JSON in request body.
      * 
      * @param product
      * @return
@@ -79,6 +79,12 @@ public class ProductController {
         return product;
     }
 
+    /**
+     * Delete a product against a given product id.
+     * 
+     * @param id
+     * @return
+     */
     @DeleteMapping("/{id}")
     public Map<String, String> deleteProduct(@PathVariable("id") Long id) {
         this.productService.deleteProduct(id);
