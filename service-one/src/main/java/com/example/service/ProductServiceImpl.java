@@ -16,8 +16,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceImpl() {
         products.add(new Product(Long.valueOf(1), "product-1", 1000));
         products.add(new Product(Long.valueOf(2), "product-2", 2000));
-        products.add(new Product(Long.valueOf(3), "product-3", 3000));
-        products.add(new Product(Long.valueOf(4), "product-4", 4000));
+//        products.add(new Product(Long.valueOf(3), "product-3", 3000));
+//        products.add(new Product(Long.valueOf(4), "product-4", 4000));
     }
 
     @Override
