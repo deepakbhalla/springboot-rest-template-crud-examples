@@ -39,6 +39,7 @@ public class ProductController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleError(HttpServletRequest req, Exception ex) {
 
+        System.out.println(ex.getStackTrace());
         CustomError error = new CustomError(HttpStatus.BAD_REQUEST, ex.getMessage());
         return new ResponseEntity<Object>(error, new HttpHeaders(), error.getStatus());
     }
